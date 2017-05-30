@@ -35,20 +35,32 @@ import paho.mqtt.client as mqtt
 import json
 from time import sleep
 from datetime import datetime
+import threading
 
 def on_connect(client, userdata, flags, rc):
    print("Connected with result code", str(rc))
 
    client.subscribe("/keti/energy/fromserver/")
+   client.subscribe("/keti/energy/statusrequest")
+   print("Subscribed to topics fromserver and statusrequest")
 
 def on_message(client, userdata, msg):
-   print(msg.topic, " ", str(msg.payload))
+   #print(msg.topic, " ", str(msg.payload))
+   if msg.topic == "/keti/energy/statusrequest":
+      client.publish("/keti/energy/systemstatus", '{"nodename":"Gateway", "status":"on"}')
+      
 
 mqtt_client = mqtt.Client()
 mqtt_client.on_connect = on_connect
 mqtt_client.on_message = on_message
 mqtt_client.connect("117.16.136.173", 1883, 600)
 #mqtt_client = None
+
+def MQTTStarterThread():
+   mqtt_client.loop_start()
+
+t = threading.Thread(target=MQTTStarterThread())
+t.start()
 
 
 def generateSensorDataDict(sname, sid, stat, temperature, humidity, trainID):
