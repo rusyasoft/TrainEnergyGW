@@ -72,7 +72,7 @@ def generateSensorDataDict(sname, sid, stat, temperature, humidity, trainID):
       sensordata['Status']='On'
    else:
       sensordata['Status']='Off'
-   sensordata['temp']=temperature
+   sensordata['temp']= (temperature-32)/1.8 #convert to celsius#temperature
    sensordata['hum']=humidity
    sensordata['timestamp']=str(datetime.now())
    return sensordata
@@ -89,7 +89,7 @@ device="/dev/ttyACM0"
 log="None"
 sniff=300.0
 
-trainID = "1905"
+trainID = "111"
 
 for arg in sys.argv:
     if arg.startswith("--device"):

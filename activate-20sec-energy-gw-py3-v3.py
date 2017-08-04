@@ -259,7 +259,7 @@ while whilecounter>0: # when forever is needed put just True:
       print('Product Name = ', network.nodes[node].product_name)
 
       
-      if network.nodes[node].product_name.find('MultiSensor') != -1:
+      if True: #network.nodes[node].product_name.find('MultiSensor') != -1:
          #request current interval
          print('Request node interval with 111')
          network.nodes[node].get_sensors()
@@ -269,7 +269,7 @@ while whilecounter>0: # when forever is needed put just True:
 
          network.nodes[node].set_config_param(101, 241)
          #time.sleep(5.0)
-         network.nodes[node].set_config_param(111, 20)
+         network.nodes[node].set_config_param(111, 40)
          #time.sleep(5.0)
          print('Done request node of interval with 111')
 
